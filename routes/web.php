@@ -25,32 +25,28 @@ Route::post('/CreateEmployee', [AdminController::class, 'createEmployee']);
 Route::delete('/admin/{id}', [AdminController::class, 'destroyUser'])->name('destroyUser');
 Route::delete('/admin/{id}', [AdminController::class, 'destroyEmployee'])->name('destroyEmployee');
 // @@@@@@@@@@@@@@@@@@@@@@@@@@@ END
-
-
-
-
-
-
-
-//testing
-Route::get('/dashboard_test', function () {
-    return view('dashboard');
-});
-
-Route::get('/user_test', function () {
-    return view('user');
-})->name('user_test');
-
-Route::get('/user/ticket', function () {
-    return view('ticket');
-})->name('ticket');
-
 Route::get('/admin', function () {
     return view('admin.dashboard');
 });
 
+//Testing routs 
+Route::get('/dashboard_test', function () {
+    return view('dashboard');
+});
 
+//@@@@@@@@@ New routes
+//Main page, all user tickets
+Route::get('/user_test', [TicketController::class, 'index']);
+//Ticket page
+Route::get('/user/ticket', function () {
+    return view('ticket');
+})->name('ticket');
+//post a new ticket
 Route::post('/user/ticket', [TicketController::class, 'store']);
+//Edit user ticket
+Route::get('user_test/{ticket}/edit', [TicketController::class, 'edit']);
+Route::patch('user_test/{ticket}/edit', [TicketController::class, 'update']);
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ end
 
 Route::get('/dashboard', function () {
     return view('dashboard');
