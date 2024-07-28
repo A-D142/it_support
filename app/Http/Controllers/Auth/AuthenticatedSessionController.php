@@ -33,16 +33,17 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        return redirect()->intended(route('user_test', absolute: false));
     }
 
     public function store_emp(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
+        return dd();
+        $request->Auth::guard('web-emp')->authenticate();
 
-        $request->session()->regenerate();
+        $request->Auth::guard('web-emp')->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        return redirect()->intended(route('users', absolute: false));
     }
 
     /**

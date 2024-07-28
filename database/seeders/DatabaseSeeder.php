@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         Department::factory()->create([
-            'department_name' => 'Marketing',
+            'department_name' => 'Not assgined',
         ]);
 
         User::factory()->create([
