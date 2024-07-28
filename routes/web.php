@@ -10,6 +10,7 @@ Route::get('/', function () {
 });
 
 // @@@@@@@@@@@@@@@@@@@@@@@@@@@ START OF ADMIN ROUTS
+
 Route::get('/admin', [AdminController::class, 'index'])->name('users');
 Route::get('/departments', [AdminController::class, 'departments'])->name('departments');
 Route::get('/tickets', [AdminController::class, 'tickets'])->name('tickets');
@@ -17,15 +18,29 @@ Route::get('/tickets', [AdminController::class, 'tickets'])->name('tickets');
 
 Route::get('/CreateUser', [AdminController::class, 'createUserPage'])->name('createUserPage');
 Route::get('/CreateEmployee', [AdminController::class, 'createEmployeePage'])->name('createEmployeePage');
-Route::post('/CreateUser', [AdminController::class, 'createUser']);
-Route::post('/CreateEmployee', [AdminController::class, 'createEmployee']);
+Route::post('/CreateUser', [AdminController::class, 'createUser'])->name('createUser');
+Route::post('/CreateEmployee', [AdminController::class, 'createEmployee'])->name('createEmployee');
+
+Route::get('/EditUser/{id}', [AdminController::class, 'editUser']);
+Route::get('/EditEmployee/{id}', [AdminController::class, 'editEmployee'])->name('editEmployee');
+
+Route::patch('/EditUser/{id}', [AdminController::class, 'storeUser']);
+Route::patch('/EditEmployee/{id}', [AdminController::class, 'storeEmployee']);
+
+
+
+Route::get('/createDepartment', [AdminController::class, 'createDepartmentPage'])->name('createDepartmentPage');
+Route::post('/createDepartment', [AdminController::class, 'createDepartment'])->name('createDepartment');
 
 
 
 Route::delete('/admin/{id}', [AdminController::class, 'destroyUser'])->name('destroyUser');
 Route::delete('/admin/{id}', [AdminController::class, 'destroyEmployee'])->name('destroyEmployee');
-// @@@@@@@@@@@@@@@@@@@@@@@@@@@ END
+Route::delete('/departments/{id}', [AdminController::class, 'destroyDepartment'])->name('destroyDepartment');
 
+
+
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@ END
 
 
 
