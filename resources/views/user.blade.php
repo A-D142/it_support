@@ -9,18 +9,20 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>User Page</title>
+    <title>SB Admin 2 - Dashboard</title>
 
     <!-- Custom fonts for this template-->
-    <link href={{ asset('frontend/vendor/fontawesome-free/css/all.min.css') }} rel="stylesheet" type="text/css">
+    {{-- <link href={{ asset('frontend/vendor/fontawesome/css/all.min.css') }} rel="stylesheet" type="text/css"> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link
-        href='https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i'
+        href={{ asset('frontend/https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i') }}
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href={{ asset('frontend/css/sb-admin-2.min.css') }} rel="stylesheet">
 
 </head>
+
 
 <body id="page-top">
 
@@ -252,7 +254,13 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href={{ asset('frontend/#') }} id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">name</span>
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                        @if (Auth::check())
+                                        {{ Auth::user()->name }}
+                                    @else
+                                        Guest
+                                    @endif
+                                    </span>
                                     {{-- {{auth()->user()->name}} --}}
                                 <img class="img-profile rounded-circle"
                                     src={{ asset('frontend/img/undraw_profile.svg') }}>
@@ -370,8 +378,17 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Pending Tickets</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                                Open Tickets</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                @if ($tickets->isEmpty())
+                                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                    No tickets available.</div>
+                                            @else
+                                            <div class=" font-weight-bold text-warning text-uppercase mb-1">
+                                                    {{ $tickets->count() }}
+                                                </div>
+                                            @endif
+                                            </div>
                                         </div>
 
                                     <div>
@@ -600,17 +617,18 @@
             <!-- End of Main Content -->
             {{-- cards for the open tickets --}}
             <div class="row">
-                @for ($i = 0; $i < 5; $i++)
+                @foreach ($tickets as $ticket)
                     <div class="col-md-4 mb-4">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Card Title {{ $i + 1 }}</h5>
-                                <p class="card-text">This is the description for card {{ $i + 1 }}.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                                <h5 class="card-title">Ticket Title: {{ $ticket->title }}</h5>
+                                <p class="card-text">{{ $ticket->description }}</p>
+                                <p class="card-text"><strong>Assigned Employee:</strong> {{ $ticket->employee ? $ticket->employee->name : 'Not Assigned' }}</p>
+                                <a href="user_test/{{$ticket->id}}/edit" class="btn btn-primary">Edit Ticket</a>
                             </div>
                         </div>
                     </div>
-                @endfor
+                @endforeach
             </div>
             <!-- Footer -->
             <footer class="sticky-footer bg-white">

@@ -15,7 +15,11 @@ class TicketController extends Controller
      */
     public function index()
     {
-        //
+        //fetch tickets store them in $tickets, send it with the view
+        // Fetch tickets created by the authenticated user
+        $tickets = Ticket::where('user_id', Auth::id())->get();
+        // Pass tickets to the view
+        return view('user', compact('tickets'));
     }
 
     /**
@@ -43,6 +47,7 @@ class TicketController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'user_id' => Auth::id(),
+            'statues_id' => '1'
         ]);
 
         //  @@@@@@@@@@@@@@ SEND CONFERMATION EMAIL:
@@ -52,7 +57,7 @@ class TicketController extends Controller
 
 
         // @@@@@@@@@@@@@@@
-        return redirect('dashboard');
+        return redirect('/user_test');
     }
 
 
@@ -69,7 +74,12 @@ class TicketController extends Controller
      */
     public function edit(Ticket $ticket)
     {
-        //
+        // attepmt to find the ticket
+    // $ticket = Ticket::findOrFail($ticket);
+        // SEND THE TICKET WITH THE EDIT VIEW
+    return view('ticket_edit', compact('ticket'));
+    // return view('edit');
+    // return $ticket;
     }
 
     /**
@@ -77,7 +87,16 @@ class TicketController extends Controller
      */
     public function update(UpdateTicketRequest $request, Ticket $ticket)
     {
-        //
+        // Validate the incoming request data
+    $validatedData = $request->validate([
+                'title' => 'required|string|max:255',
+                'description' => 'required|string',
+    ]);
+
+    // Update the ticket with the validated data
+    $ticket->update($validatedData);
+
+    return redirect('/user_test');
     }
 
     /**
