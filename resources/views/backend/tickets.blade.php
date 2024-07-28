@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -65,7 +67,7 @@
 
             <!-- Nav Item - Tickets -->
             <li class="nav-item">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="{{route('tickets')}}">
                     <i class="fas fa-ticket-alt"></i>
                     <span>Tickets</span></a>
             </li>
@@ -296,38 +298,44 @@
                 <div class="container-fluid">
                     <!-- Create Button -->
                     <div class="mb-4">
-                        <a href="{{ route('createUserPage') }}" class="btn btn-primary">Create User</a>
+                        {{-- <a href="{{ route('create.page') }}" class="btn btn-primary">Create</a> --}}
                     </div>
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Users</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Tickets</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>email</th>
-                                            <th>email verified at</th>
-                                            <th>department</th>
-                                            <th>user created at</th>
-                                            <th>Actions</th>
+                                            <th>title</th>
+                                            <th>description</th>
+                                            <th>issued from</th>
+                                            <th>statues</th>
+                                            <th>Handled by</th>
+                                            <th>created at</th>
+                                            <th>actions</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($users as $user)
 
                                         <tr>
-                                            <td>{{$user->name}}</td>
-                                            <td>{{$user->email}}</td>
-                                            <td>{{$user->email_verified_at}}</td>
-                                            <td>{{$user->department->department_name}}</td>
-                                            <td>{{$user->created_at}}</td>
+                                            @foreach ($tickets as $ticket )
+
+                                            <td>{{$ticket->title}}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            
                                             <td>
-                                                <a href="/EditUser/{{$user->id}}" class="btn btn-warning btn-sm">Edit</a>
-                                                <form action="/admin/{{$user->id}}" method="POST" style="display:inline;">
+                                                <a href="" class="btn btn-warning btn-sm">Edit</a>
+                                                <form action="" method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm">Delete</button>
@@ -335,60 +343,13 @@
                                             </td>
                                         </tr>
                                         @endforeach
+
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
-<!-- Create Button for Employees -->
-<div class="mb-4">
-    <a href="{{route('createEmployeePage')}}" class="btn btn-primary">Create Employee</a>
-</div>
-
-<!-- DataTales Example for Employees -->
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">IT Employees</h6>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTableEmployees" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>email</th>
-                        <th>email verified at</th>
-                        <th>Resolved Tickets</th>
-                        <th>user created at</th>
-                        <th>actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($employees as $employee )
-
-                    <tr>
-                        <td>{{$employee->name}}</td>
-                        <td>{{$employee->email}}</td>
-                        <td>{{$employee->email_verified_at}}</td>
-                        <td>{{$employee->resolved_tickets}}</td>
-                        <td>{{$employee->created_at}}</td>
-                        <td>
-                            <a href="{{ route('editEmployee', ['id' => $employee->id]) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <form action="{{ route('destroyEmployee', ['id' => $employee->id]) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                    @endforeach
-
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
 
                 <!-- /.container-fluid -->
 

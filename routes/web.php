@@ -15,10 +15,12 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Auth\PasswordController;
 
 
+
     Route::get('register', [RegisteredUserController::class, 'create'])
                 ->name('register');
 
     Route::post('register', [RegisteredUserController::class, 'store']);
+
 
     Route::get('/', [AuthenticatedSessionController::class, 'create'])
                 ->name('login');
@@ -102,11 +104,25 @@ Route::middleware(['auth:web-emp'])->group(function () {
     Route::get('/CreateEmployee', [AdminController::class, 'createEmployeePage'])->name('createEmployeePage');
     Route::post('/CreateUser', [AdminController::class, 'createUser']);
     Route::post('/CreateEmployee', [AdminController::class, 'createEmployee']);
+  
+  
+    Route::get('/EditUser/{id}', [AdminController::class, 'editUser']);
+    Route::get('/EditEmployee/{id}', [AdminController::class, 'editEmployee'])->name('editEmployee');
+
+    Route::patch('/EditUser/{id}', [AdminController::class, 'storeUser']);
+    Route::patch('/EditEmployee/{id}', [AdminController::class, 'storeEmployee']);
+
+
+
+    Route::get('/createDepartment', [AdminController::class, 'createDepartmentPage'])->name('createDepartmentPage');
+    Route::post('/createDepartment', [AdminController::class, 'createDepartment'])->name('createDepartment');
 
 
 
     Route::delete('/admin/{id}', [AdminController::class, 'destroyUser'])->name('destroyUser');
     Route::delete('/admin/{id}', [AdminController::class, 'destroyEmployee'])->name('destroyEmployee');
+    Route::delete('/departments/{id}', [AdminController::class, 'destroyDepartment'])->name('destroyDepartment');
+
     // @@@@@@@@@@@@@@@@@@@@@@@@@@@ END
 });
 
